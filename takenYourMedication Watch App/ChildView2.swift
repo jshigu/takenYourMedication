@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChildViewRecord: View {
+struct ChildViewDouiMessage: View {
     @State private var Navigation: Bool = false
     @State private var isChoZen: Bool = false
     @State private var isChoGo: Bool = false
