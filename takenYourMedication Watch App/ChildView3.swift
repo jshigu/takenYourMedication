@@ -62,7 +62,7 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
 
 //        //記録されているベル_リスト値を時分をいれる
 //        selectionValueTime2 = 0
-//        selectionValueMini2 = 1
+//        selectionValueMini2 = 0
 
         //通知の中身を設定
         let content = UNMutableNotificationContent()
@@ -90,12 +90,32 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         if #available(iOS 14.0, *) {
+            let calendar = Calendar(identifier: .gregorian)
+            let date = Date()
+            let day: Int = Int( calendar.component(.day, from: date) )
+            let hour : Int = Int(calendar.component(.hour, from: date))
+            let miut : Int = Int(calendar.component(.minute, from: date))
+            if medicatioRecodeClear() == 1 {
+                let _ = print("\(day)日\(hour)時\(miut)分　#available(iOS 14.0, *)true：データの更新　あり")
+            }else{
+                let _ = print("\(day)日\(hour)時\(miut)分　#available(iOS 14.0, *)true：データの更新　なし")
+            }
+
             completionHandler([.banner, .sound, .badge])
         } else {
+            let calendar = Calendar(identifier: .gregorian)
+            let date = Date()
+            let day: Int = Int( calendar.component(.day, from: date) )
+            let hour : Int = Int(calendar.component(.hour, from: date))
+            let miut : Int = Int(calendar.component(.minute, from: date))
+            if medicatioRecodeClear() == 1 {
+                let _ = print("\(day)日\(hour)時\(miut)分　　#available(iOS 14.0, *)fale：データの更新　あり")
+            }else{
+                let _ = print("\(day)日\(hour)時\(miut)分　　#available(iOS 14.0, *)fale：データの更新　なし")
+            }
+
             completionHandler([.alert, .sound])
         }
-        medicatioRecodeClear()
-        dayUpdeteFlg = true
     }
 }
 
