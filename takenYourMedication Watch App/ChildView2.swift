@@ -58,10 +58,11 @@ struct TagviewRecord: View {
                 //西暦
                 let calendar = Calendar(identifier: .gregorian)
                 let date = Date()
-                let month : Int = Int(calendar.component(.month, from: date))
-                let day: Int = Int( calendar.component(.day, from: date) )
-                let hour : Int = Int(calendar.component(.hour, from: date))
-                let miut : Int = Int(calendar.component(.minute, from: date))
+                let modifiedDate = Calendar.current.date(byAdding: .day, value: -1 * selectionOffset , to: date)!
+                let month : Int = Int(calendar.component(.month, from: modifiedDate))
+                let day: Int = Int( calendar.component(.day, from: modifiedDate) )
+                let hour : Int = Int(calendar.component(.hour, from: modifiedDate))
+                let miut : Int = Int(calendar.component(.minute, from: modifiedDate))
                 
                 if medicatioRecodeClear() == 1 {
                     let _ = print("\(day)日\(hour)時\(miut)分　TimelineView：データの更新　あり")
@@ -78,7 +79,6 @@ struct TagviewRecord: View {
                         .onAppear {
                             history = medicationDataPrint()
                         }
-                    
                     
                     Picker("", selection: $selectionOffset ) {
                         /// 選択項目の一覧
